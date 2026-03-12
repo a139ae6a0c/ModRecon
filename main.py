@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 """
+Network Discovery & Modbus/ICS Scanner
+---------------------------------------
+1. Prompts for a target IP address or subnet.
+2. Detects the active network interface automatically.
+3. Runs netdiscover (ARP scan) on the detected interface.
+4. Runs a quick Nmap check to see if Modbus (TCP 502) is open.
+5. Runs a full Nmap scan targeting common ICS/SCADA/Modbus ports & scripts.
+6. Prints a final summary report of all findings.
+
 Requirements:
     - Python 3.8+
     - netdiscover  (apt install netdiscover)
@@ -32,39 +41,38 @@ class Colors:
     BOLD    = "\033[1m"
     DIM     = "\033[2m"
     RESET   = "\033[0m"
-    # Fish-specific
+    # Fish/Whale-specific
     ORANGE  = "\033[38;5;208m"
     GOLD    = "\033[38;5;220m"
-    FISH_BODY = "\033[38;5;209m"   # salmon/orange
-    FISH_FIN  = "\033[38;5;214m"   # golden fin
-    FISH_EYE  = "\033[38;5;15m"    # bright white eye
-    FISH_TAIL = "\033[38;5;202m"   # deep orange tail
-    WATER     = "\033[38;5;39m"    # blue water / bubbles
-    DARK_FIN  = "\033[38;5;166m"   # darker orange accent
+    WHALE_EYE = "\033[38;5;15m"    # bright white eye
+    WATER     = "\033[38;5;39m"    # blue water / waves
+    WHALE_BDY = "\033[38;5;33m"    # deep blue whale body
+    SPOUT     = "\033[38;5;87m"    # light cyan water spout
 
 
 def banner():
-    R  = Colors.RESET
-    B  = Colors.FISH_BODY    # salmon body
-    F  = Colors.FISH_FIN     # golden fins/spines
-    E  = Colors.FISH_EYE     # bright white eye
-    T  = Colors.FISH_TAIL    # deep orange tail
-    W  = Colors.WATER        # blue water
-    D  = Colors.DARK_FIN     # darker accent lines
+    R = Colors.RESET
     BLD = Colors.BOLD
     CY = Colors.CYAN
 
+    W = Colors.WATER  # waves
+    B = Colors.WHALE_BDY  # whale body
+    S = Colors.SPOUT  # water spout
+    E = Colors.WHALE_EYE  # eye
+
+    # Note: Backslashes (\) are escaped as \\ in f-strings
     whale = f"""{BLD}
-           .
-          ":"
-        ___:____     |"\/"|
-      ,'        `.    \  /
-      |  O        \___/  |
-    ~^~^~^~^~^~^~^~^~^~^~^~^~
+           {S}.{R}
+          {S}":"{R}
+        {B}___{S}:{B}____{R}     {B}|"\\/"|{R}
+      {B},'{R}        {B}`.{R}    {B}\\  /{R}
+      {B}|{R}  {E}O{R}        {B}\\___/  |{R}
+    {W}~^~^~^~^~^~^~^~^~^~^~^~^~{R}
 
-    """
+{CY}{BLD}  ≋≋≋  Modbus / ICS Network Scanner  ≋≋≋{R}
+{W}  ≋≋≋  netdiscover  +  nmap  +  modbus  ≋≋≋{R}
+"""
     print(whale)
-
 
 def stage_header(number: int, title: str):
     width = 54
@@ -591,5 +599,4 @@ def main():
 
 
 if __name__ == "__main__":
-
     main()
