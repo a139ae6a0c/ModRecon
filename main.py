@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
 """
-Network Discovery & Modbus/ICS Scanner
----------------------------------------
-1. Prompts for a target IP address or subnet.
-2. Detects the active network interface automatically.
-3. Runs netdiscover (ARP scan) on the detected interface.
-4. Runs a quick Nmap check to see if Modbus (TCP 502) is open.
-5. Runs a full Nmap scan targeting common ICS/SCADA/Modbus ports & scripts.
-6. Prints a final summary report of all findings.
-
 Requirements:
     - Python 3.8+
     - netdiscover  (apt install netdiscover)
@@ -600,3 +591,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
